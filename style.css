@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #271e1e;
+}
+
+#widget-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    /* box-sizing: border-box; */
+}
+
+.tradingview-widget-container {
+    height: 500px !important;
+    flex: 1 1 500px;
+    min-width: 500px;
+    background-color: #ffffff;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 8px; */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* text-align: center; */
+    /* padding: 20px; */
+    /* box-sizing: border-box; */
+}
+
+@media (max-width: 600px) {
+    .tradingview-widget-container {
+        min-width: 300px;
+    }
+}

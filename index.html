@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Crypto Charts</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="widget-container"></div>
+
+        <script>
+            const symbols = [
+                "KRAKEN:BTCUSD",
+                "KRAKEN:ETHUSD",
+                "KRAKEN:XRPUSD",
+                "KRAKEN:SOLUSD",
+                "KRAKEN:DOGEUSD",
+                "KRAKEN:XLMUSD",
+                "KRAKEN:ADAUSD",
+                "KRAKEN:TRXUSD",
+                "KRAKEN:SUIUSD",
+                "KRAKEN:LINKUSD",
+                "KRAKEN:LTCUSD",
+                "KRAKEN:AVAXUSD",
+                "KRAKEN:FTMUSD",
+                "KRAKEN:ALGOUSD",
+                "KRAKEN:ARBUSD",
+                "KRAKEN:BCHUSD",
+                "KRAKEN:TAOUSSD",
+                "KRAKEN:DOTUSD",
+            ];
+
+            const container = document.getElementById("widget-container");
+
+            symbols.forEach((symbol) => {
+                const widgetContainer = document.createElement("div");
+                widgetContainer.classList.add("tradingview-widget-container");
+                widgetContainer.style.height = "100%";
+                widgetContainer.style.width = "100%";
+
+                const widgetDiv = document.createElement("div");
+                widgetDiv.classList.add("tradingview-widget-container__widget");
+                widgetDiv.style.height = "calc(100% - 32px)";
+                widgetDiv.style.width = "100%";
+                widgetContainer.appendChild(widgetDiv);
+
+                const script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+                script.async = true;
+                script.innerHTML = `
+                    {
+                        "autosize": true,
+                        "symbol": "${symbol}",
+                        "timezone": "America/New_York",
+                        "theme": "dark",
+                        "style": "2",
+                        "locale": "en",
+                        "withdateranges": true,
+                        "range": "1D",
+                        "allow_symbol_change": true,
+                        "save_image": false,
+                        "calendar": false,
+                        "support_host": "https://www.tradingview.com"
+                    }
+                `;
+                widgetContainer.appendChild(script);
+
+                container.appendChild(widgetContainer);
+            });
+        </script>
+    </body>
+</html>
