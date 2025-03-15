@@ -1,8 +1,6 @@
+/* filepath: c:\Users\imran\Coding\coins\style.css */
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
     background-color: #271e1e;
@@ -14,7 +12,6 @@ body {
     justify-content: center;
     gap: 20px;
     padding: 20px;
-    /* box-sizing: border-box; */
 }
 
 .tradingview-widget-container {
@@ -22,19 +19,130 @@ body {
     flex: 1 1 500px;
     min-width: 500px;
     background-color: #ffffff;
-    /* border: 1px solid #ccc; */
-    /* border-radius: 8px; */
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* text-align: center; */
-    /* padding: 20px; */
-    /* box-sizing: border-box; */
 }
 
 @media (max-width: 600px) {
     .tradingview-widget-container {
         min-width: 300px;
     }
+}
+
+.control-panel {
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    background-color: #1e222d;
+    border-bottom: 1px solid #363c4e;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.select-container {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.select2-container--dark .select2-selection--multiple {
+    background-color: #2a2e39;
+    border: 1px solid #363c4e;
+    /* min-height: 36px; */
+    color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.select2-container--dark .select2-selection--multiple .select2-selection__rendered {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0 5px;
+}
+
+.select2-container--dark .select2-selection--multiple .select2-selection__choice {
+    /* background-color: gray; */
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin: 4px 0;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    max-width: fit-content;
+    white-space: nowrap;
+}
+
+.select2-container--dark .select2-selection--multiple .select2-selection__choice__remove {
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.select2-container--dark .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: #ffffff;
+}
+
+.select2-container--dark .select2-results__option--selected[aria-selected] {
+    background-color: #3a3f4c;
+    color: #ffffff;
+}
+
+.select2-container--dark .select2-results__option--highlighted[aria-selected] {
+    background-color: #284c86;
+    color: #ffffff;
+}
+
+.select2-container--dark .select2-results__option {
+    padding: 8px 12px;
+    background-color: #2a2e39;
+    color: #ffffff;
+}
+
+.select2-container--dark .select2-search__field {
+    display: none;
+}
+
+.select2-container--dark .select2-selection__clear {
+    color: rgb(235, 75, 75);
+    cursor: pointer;
+    margin-left: auto;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.select2-container--dark .select2-dropdown {
+    background-color: #1e222d;
+    border: 1px solid #363c4e;
+}
+
+.update-btn {
+    padding: 10px 20px;
+    background-color: #284c86;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    height: 40px;
+    align-self: flex-end;
+}
+
+.update-btn:hover {
+    background-color: #a22ae7;
+}
+
+/* Fix for input field taking up entire width */
+.select2-search.select2-search--inline {
+    flex: 0;
+    width: auto;
+}
+
+/* Ensure pills wrap properly in a row */
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+    white-space: normal;
+    padding: 0;
+    margin: 0;
 }

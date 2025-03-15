@@ -1,34 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Crypto Charts</title>
-        <link rel="icon" href="favicon.jpg" type="image/jpeg" />
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <div id="widget-container"></div>
 
-        <script>
-            const symbols = [
-                "KRAKEN:BTCUSD",
-                "KRAKEN:ETHUSD",
-                "KRAKEN:XRPUSD",
-                "KRAKEN:SOLUSD",
-                "KRAKEN:LINKUSD",
-                "KRAKEN:LTCUSD",
-                "KRAKEN:ADAUSD",
-                "KRAKEN:SUIUSD",
-                "KRAKEN:ALGOUSD",
-                "KRAKEN:BCHUSD",
-                "KRAKEN:ONDOUSD",
-                "KRAKEN:TRUMPUSD",
-            ];
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Charts</title>
+    <link rel="icon" href="favicon.jpg" type="image/jpeg" />
+    <!-- jQuery (required for Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Select2 CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
 
-            const container = document.getElementById("widget-container");
+<body>
+    <div class="control-panel">
+        <div class="select-container">
+            <select id="token-selector" multiple class="select2-multi"></select>
+        </div>
+        <button id="update-btn" class="update-btn">Update Charts</button>
+    </div>
 
-            symbols.forEach((symbol) => {
+    <div id="widget-container"></div>
+
+    <script>
+        const availableSymbols = [
+            "KRAKEN:BTCUSD",
+            "KRAKEN:ETHUSD",
+            "KRAKEN:XRPUSD",
+            "KRAKEN:SOLUSD",
+            "KRAKEN:ADAUSD",
+            "KRAKEN:DOGEUSD",
+            "KRAKEN:LINKUSD",
+            "KRAKEN:LTCUSD",
+            "KRAKEN:SUIUSD",
+            "KRAKEN:ALGOUSD",
+            "KRAKEN:BCHUSD",
+            "KRAKEN:ONDOUSD",
+            "KRAKEN:TRUMPUSD",
+            "KRAKEN:JAILSTOOLUSD",
+            "KRAKEN:XLMUSD",
+            "KRAKEN:TAOUSD",
+            "KRAKEN:KASUSD",
+            "KRAKEN:PEPEUSD",
+            "KRAKEN:FTMUSD",
+            "KRAKEN:AVAXUSD",
+        ];
+
+        // Initialize the selector with options
+        const tokenSelector = document.getElementById("token-selector");
+        const updateBtn = document.getElementById("update-btn");
+        const container = document.getElementById("widget-container");
+
+        // Load saved selections from localStorage
+        const savedSelections = JSON.parse(localStorage.getItem('cryptoSelections')) || ["KRAKEN:BTCUSD", "KRAKEN:ETHUSD"];
+
+        // Populate the multi-select with options
+        availableSymbols.forEach(symbol => {
+            const option = document.createElement("option");
+            // Extract the token name from the symbol (remove KRAKEN: and USD)
+            const tokenName = symbol.replace("KRAKEN:", "").replace("USD", "");
+            option.value = symbol;
+            option.textContent = tokenName;
+            // Select based on saved selections
+            if (savedSelections.includes(symbol)) {
+                option.selected = true;
+            }
+            tokenSelector.appendChild(option);
+        });
+
+        // Initialize Select2
+        $(document).ready(function () {
+            $('.select2-multi').select2({
+                placeholder: "Select cryptocurrencies",
+                allowClear: true,
+                theme: "dark",
+                width: '100%',
+                closeOnSelect: false,
+            });
+
+            // Update selected options in the underlying select when Select2 changes
+            $('.select2-multi').on('change', function () {
+                // This ensures the actual select element stays in sync with Select2
+                const selectedValues = $(this).val();
+                Array.from(tokenSelector.options).forEach(option => {
+                    option.selected = selectedValues.includes(option.value);
+                });
+            });
+        });
+
+        // Function to render the selected crypto widgets
+        function renderSelectedWidgets() {
+            // Clear current widgets
+            container.innerHTML = "";
+
+            // Get selected options
+            const selectedSymbols = Array.from(tokenSelector.selectedOptions).map(option => option.value);
+
+            // Save selections to localStorage
+            localStorage.setItem('cryptoSelections', JSON.stringify(selectedSymbols));
+
+            // Create widgets for each selected symbol
+            selectedSymbols.forEach((symbol) => {
                 const widgetContainer = document.createElement("div");
                 widgetContainer.classList.add("tradingview-widget-container");
                 widgetContainer.style.height = "100%";
@@ -45,25 +119,32 @@
                 script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
                 script.async = true;
                 script.innerHTML = `
-                    {
-                        "autosize": true,
-                        "symbol": "${symbol}",
-                        "timezone": "America/New_York",
-                        "theme": "dark",
-                        "style": "2",
-                        "locale": "en",
-                        "withdateranges": true,
-                        "range": "1D",
-                        "allow_symbol_change": true,
-                        "save_image": false,
-                        "calendar": false,
-                        "support_host": "https://www.tradingview.com"
-                    }
-                `;
+                        {
+                            "autosize": true,
+                            "symbol": "${symbol}",
+                            "timezone": "America/New_York",
+                            "theme": "dark",
+                            "style": "2",
+                            "locale": "en",
+                            "withdateranges": true,
+                            "range": "1D",
+                            "allow_symbol_change": true,
+                            "save_image": false,
+                            "calendar": false,
+                            "support_host": "https://www.tradingview.com"
+                        }
+                    `;
                 widgetContainer.appendChild(script);
-
                 container.appendChild(widgetContainer);
             });
-        </script>
-    </body>
+        }
+
+        // Add event listener to update button
+        updateBtn.addEventListener("click", renderSelectedWidgets);
+
+        // Initial render with saved selections
+        renderSelectedWidgets();
+    </script>
+</body>
+
 </html>
