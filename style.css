@@ -1,148 +1,283 @@
-/* filepath: c:\Users\imran\Coding\coins\style.css */
+/* Modern Premium Dark Theme */
+:root {
+    --bg-color: #0f1115;
+    /* Deep dark background */
+    --card-bg: #181b21;
+    --primary-accent: #5e6ad2;
+    /* Soft premium purple-blue */
+    --secondary-accent: #26a69a;
+    /* TradingView Green-ish */
+    --text-main: #e1e3e6;
+    --text-muted: #8d949e;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(24, 27, 33, 0.7);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
     margin: 0;
-    background-color: #271e1e;
+    min-height: 100vh;
 }
 
-#widget-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
-.tradingview-widget-container {
-    height: 500px !important;
-    flex: 1 1 500px;
-    min-width: 500px;
-    background-color: #ffffff;
-}
-
-@media (max-width: 600px) {
-    .tradingview-widget-container {
-        min-width: 300px;
-    }
-}
-
+/* Control Panel / Header */
 .control-panel {
     display: flex;
-    align-items: flex-end;
-    padding: 20px;
-    background-color: #1e222d;
-    border-bottom: 1px solid #363c4e;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
     position: sticky;
     top: 0;
     z-index: 1000;
+    gap: 2rem;
 }
 
-.select-container {
-    flex: 1;
-    margin-right: 15px;
-}
-
-.select2-container--dark .select2-selection--multiple {
-    background-color: #2a2e39;
-    border: 1px solid #363c4e;
-    /* min-height: 36px; */
-    color: #ffffff;
+.logo {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-main);
     display: flex;
-    flex-wrap: wrap;
-}
-
-.select2-container--dark .select2-selection--multiple .select2-selection__rendered {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    padding: 0 5px;
-}
-
-.select2-container--dark .select2-selection--multiple .select2-selection__choice {
-    /* background-color: gray; */
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    margin: 4px 0;
-    color: #ffffff;
-    display: inline-flex;
     align-items: center;
-    max-width: fit-content;
-    white-space: nowrap;
+    gap: 0.5rem;
 }
 
-.select2-container--dark .select2-selection--multiple .select2-selection__choice__remove {
-    color: rgba(255, 255, 255, 0.7);
-    margin-right: 5px;
+.logo i {
+    color: var(--primary-accent);
+}
+
+/* Search Input */
+.search-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+input#coin-search {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+input#coin-search:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 2px rgba(94, 106, 210, 0.2);
+}
+
+/* Search Dropdown */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-soft);
+    display: none;
+    /* hidden by default */
+    z-index: 1001;
+}
+
+.search-results li {
+    padding: 0.75rem 1rem;
     cursor: pointer;
-    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background-color 0.15s;
+    font-size: 0.9rem;
 }
 
-.select2-container--dark .select2-selection--multiple .select2-selection__choice__remove:hover {
-    color: #ffffff;
+.search-results li:last-child {
+    border-bottom: none;
 }
 
-.select2-container--dark .select2-results__option--selected[aria-selected] {
-    background-color: #3a3f4c;
-    color: #ffffff;
+.search-results li:hover {
+    background-color: var(--hover-bg);
+    color: var(--primary-accent);
 }
 
-.select2-container--dark .select2-results__option--highlighted[aria-selected] {
-    background-color: #284c86;
-    color: #ffffff;
+/* Loading Indicator */
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: auto;
 }
 
-.select2-container--dark .select2-results__option {
-    padding: 8px 12px;
-    background-color: #2a2e39;
-    color: #ffffff;
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--secondary-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
 
-.select2-container--dark .select2-search__field {
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading.hidden {
     display: none;
 }
 
-.select2-container--dark .select2-selection__clear {
-    color: rgb(235, 75, 75);
+/* Tags Area */
+.tags-container {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(94, 106, 210, 0.15);
+    color: #aeb5f5;
+    border: 1px solid rgba(94, 106, 210, 0.3);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.remove-tag {
     cursor: pointer;
-    margin-left: auto;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
 }
 
-.select2-container--dark .select2-dropdown {
-    background-color: #1e222d;
-    border: 1px solid #363c4e;
-}
-
-.update-btn {
-    padding: 10px 20px;
-    background-color: #284c86;
+.remove-tag:hover {
+    opacity: 1;
     color: white;
-    border: none;
+}
+
+/* Charts Grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    padding: 0 2rem 2rem 2rem;
+}
+
+.chart-wrapper {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    min-height: 500px;
+    animation: slideUp 0.4s ease forwards;
+    display: flex;
+    flex-direction: column;
+}
+
+.tradingview-widget-container {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
     border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    height: 40px;
-    align-self: flex-end;
 }
 
-.update-btn:hover {
-    background-color: #a22ae7;
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
 }
 
-/* Fix for input field taking up entire width */
-.select2-search.select2-search--inline {
-    flex: 0;
-    width: auto;
-}
+/* Responsiveness */
+@media (max-width: 600px) {
+    .control-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem;
+    }
 
-/* Ensure pills wrap properly in a row */
-.select2-container .select2-selection--multiple .select2-selection__rendered {
-    white-space: normal;
-    padding: 0;
-    margin: 0;
+    .search-container {
+        max-width: none;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
 }
