@@ -148,8 +148,9 @@ export class UI {
     }
 
     this.selectedPairs.forEach(pairName => {
-      // TradingView widget expects format like KRAKEN:BTCUSD
-      const symbolForTV = `KRAKEN:${pairName.replace('/', '')}`;
+      // TradingView widget expects format like COINBASE:BTCUSD
+      // Remove slash and hyphen for TV symbol
+      const symbolForTV = `COINBASE:${pairName.replace(/[\/-]/g, '')}`;
 
       const wrapper = document.createElement('div');
       wrapper.className = 'chart-wrapper';
@@ -170,7 +171,7 @@ export class UI {
         new TradingView.widget({
           "autosize": true,
           "symbol": symbolForTV,
-          "interval": "D",
+          "interval": "5",
           "timezone": "Etc/UTC",
           "theme": "dark",
           "style": "1",

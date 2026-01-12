@@ -9,20 +9,26 @@
     <link rel="stylesheet" href="style.css" />
     <!-- Google Fonts for Premium Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons (optional, using CDN) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Removed -->
 </head>
 
 <body>
     <div class="app-container">
         <header class="control-panel">
             <div class="logo">
-                <i class="fa-solid fa-layer-group"></i> CryptoView
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-accent);">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg> CryptoView
             </div>
 
             <div class="search-container">
                 <div class="input-wrapper">
-                    <i class="fa-solid fa-search search-icon"></i>
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
                     <input type="text" id="coin-search" placeholder="Search Crypto (e.g. BTC, ETH)..."
                         autocomplete="off">
                 </div>
